@@ -6,11 +6,6 @@ import { LibString } from "solady/utils/LibString.sol";
 
 /// @notice A library for formatting raw bytes into readable images via Base64 encoding.
 library LibFormat {
-  /// @notice Encodes a raw bytes array into a Base64 string.
-  function toBase64(bytes memory data) public pure returns (string memory) {
-    return Base64.encode(data);
-  }
-
   /// @notice Wraps a raw image in a svg, returning an SVG base64 string.
   /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
   function SVGWrap(string memory data, string memory imgType) public pure returns (string memory) {
@@ -23,5 +18,10 @@ library LibFormat {
     );
 
     return LibString.concat("data:image/svg+xml;base64,", Base64.encode(svg));
+  }
+
+  /// @notice Encodes a raw bytes array into a Base64 string.
+  function toBase64(bytes memory data) public pure returns (string memory) {
+    return Base64.encode(data);
   }
 }
