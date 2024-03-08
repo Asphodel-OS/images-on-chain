@@ -41,7 +41,7 @@ library LibMetadata {
       external_url,
       '","attributes":[',
       _genAttributes(attributesName, attributesValue),
-      ']"}'
+      "]}"
     );
 
     return LibString.concat("data:application/json;base64,", Base64.encode(json));
@@ -51,8 +51,7 @@ library LibMetadata {
   /// @param image_data base64 encoded svg
   /// @param name name of the token
   function genMetadataRawImage(string memory image_data, string memory name) internal pure returns (string memory) {
-    bytes memory json =
-      abi.encodePacked('{"name":"', name, '","image_data":"data:image/svg+xml;base64,', image_data, '"}');
+    bytes memory json = abi.encodePacked('{"name":"', name, '","image_data":"', image_data, '"}');
 
     return LibString.concat("data:application/json;base64,", Base64.encode(json));
   }
@@ -77,13 +76,13 @@ library LibMetadata {
       name,
       '","description":"',
       description,
-      '","image_data":"data:image/svg+xml;base64,',
+      '","image_data":"',
       image_data,
       '","external_url":"',
       external_url,
       '","attributes":[',
       _genAttributes(attributesName, attributesValue),
-      ']"}'
+      "]}"
     );
 
     return LibString.concat("data:application/json;base64,", Base64.encode(json));
