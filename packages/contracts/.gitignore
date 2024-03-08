@@ -1,0 +1,15 @@
+# environment variables
+.env
+
+# ???
+bindings/
+deployments
+yarn-error.log
+
+# build and deployment artifacts 
+abi/
+artifacts/
+broadcast/
+cache/
+out/
+lib/
