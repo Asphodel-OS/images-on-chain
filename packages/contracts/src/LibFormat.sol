@@ -8,7 +8,7 @@ import { LibString } from "solady/utils/LibString.sol";
 library LibFormat {
   /// @notice Wraps a raw image in a svg, returning an SVG base64 string.
   /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
-  function SVGWrap(string memory data, string memory imgType) public pure returns (string memory) {
+  function SVGWrap(string memory data, string memory imgType) internal pure returns (string memory) {
     bytes memory svg = abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/',
       imgType,
@@ -22,7 +22,7 @@ library LibFormat {
 
   /// @notice Wraps a raw image in a svg, returning an SVG base64 string.
   /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
-  function SVGWrap(bytes memory data, string memory imgType) public pure returns (string memory) {
+  function SVGWrap(bytes memory data, string memory imgType) internal pure returns (string memory) {
     bytes memory svg = abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/',
       imgType,
@@ -35,7 +35,7 @@ library LibFormat {
   }
 
   /// @notice Encodes a raw bytes array into a Base64 string.
-  function toBase64(bytes memory data) public pure returns (string memory) {
+  function toBase64(bytes memory data) internal pure returns (string memory) {
     return Base64.encode(data);
   }
 }
