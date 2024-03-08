@@ -8,9 +8,10 @@ import { LibString } from "solady/utils/LibString.sol";
 library LibFormat {
   /// @notice Wraps a raw image in a svg, returning an SVG base64 string.
   /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
-  function SVGWrap(string memory data, string memory imgType) internal pure returns (string memory) {
+  function SVGWrap(string memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
     bytes memory svg = abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/',
+      optimisePixel ? 'height="100%" image-rendering="pixelated"' : "",
       imgType,
       ";base64,",
       data,
@@ -20,18 +21,16 @@ library LibFormat {
     return LibString.concat("data:image/svg+xml;base64,", Base64.encode(svg));
   }
 
-  /// @notice Wraps a raw image in a svg, returning an SVG base64 string.
-  /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
-  function SVGWrap(bytes memory data, string memory imgType) internal pure returns (string memory) {
-    bytes memory svg = abi.encodePacked(
-      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/',
-      imgType,
-      ";base64,",
-      toBase64(data),
-      '"/></svg>'
-    );
+  function SVGWrap(bytes memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
+    return SVGWrap(toBase64(data), imgType, optimisePixel);
+  }
 
-    return LibString.concat("data:image/svg+xml;base64,", Base64.encode(svg));
+  function SVGWrap(string memory data, string memory imgType) internal pure returns (string memory) {
+    return SVGWrap(data, imgType, false);
+  }
+
+  function SVGWrap(bytes memory data, string memory imgType) internal pure returns (string memory) {
+    return SVGWrap(toBase64(data), imgType, false);
   }
 
   /// @notice Encodes a raw bytes array into a Base64 string.
