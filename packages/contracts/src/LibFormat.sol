@@ -14,16 +14,16 @@ library LibFormat {
     returns (string memory)
   {
     bytes memory svg = abi.encodePacked(
-      "<div><img ",
+      "<svg><img ",
       optimisePixel ? 'height="100%" style="image-rendering: pixelated;" ' : "",
       'src="data:image/',
       imgType,
       ";base64,",
       data,
-      '"/></div>'
+      '"/></svg>'
     );
 
-    return LibString.concat("data:application/xml;base64,", Base64.encode(svg));
+    return LibString.concat("data:image/svg+xml;base64,", Base64.encode(svg));
   }
 
   function HTMLWrap(bytes memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
