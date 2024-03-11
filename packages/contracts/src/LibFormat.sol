@@ -11,7 +11,7 @@ library LibFormat {
   function SVGWrap(string memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
     bytes memory svg = abi.encodePacked(
       '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image ',
-      optimisePixel ? 'height="150%" width="150%" image-rendering="pixelated" ' : "",
+      optimisePixel ? 'height="3000" width="3000" image-rendering="pixelated" ' : "",
       'xlink:href="data:image/',
       imgType,
       ";base64,",
