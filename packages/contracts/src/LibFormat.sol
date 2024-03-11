@@ -6,32 +6,36 @@ import { LibString } from "solady/utils/LibString.sol";
 
 /// @notice A library for formatting raw bytes into readable images via Base64 encoding.
 library LibFormat {
-  /// @notice Wraps a raw image in a svg, returning an SVG base64 string.
-  /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
-  function SVGWrap(string memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
+  /// @notice Wraps a raw image in a html div, returning an HTML base64 string.
+  /// @dev NFT Marketplaces cannot read raw base64 images, therefore a workaround
+  function HTMLWrap(string memory data, string memory imgType, bool optimisePixel)
+    internal
+    pure
+    returns (string memory)
+  {
     bytes memory svg = abi.encodePacked(
-      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="100%" width="100%"><image ',
-      optimisePixel ? 'height="100%" width="100%" image-rendering="pixelated" ' : "",
-      'xlink:href="data:image/',
+      "<div><img ",
+      optimisePixel ? 'height="100%" style="image-rendering: pixelated;" ' : "",
+      'src="data:image/',
       imgType,
       ";base64,",
       data,
-      '"/></svg>'
+      '"/></div>'
     );
 
-    return LibString.concat("data:image/svg+xml;base64,", Base64.encode(svg));
+    return LibString.concat("data:text/html;base64,", Base64.encode(svg));
   }
 
-  function SVGWrap(bytes memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
-    return SVGWrap(toBase64(data), imgType, optimisePixel);
+  function HTMLWrap(bytes memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
+    return HTMLWrap(toBase64(data), imgType, optimisePixel);
   }
 
-  function SVGWrap(string memory data, string memory imgType) internal pure returns (string memory) {
-    return SVGWrap(data, imgType, false);
+  function HTMLWrap(string memory data, string memory imgType) internal pure returns (string memory) {
+    return HTMLWrap(data, imgType, false);
   }
 
-  function SVGWrap(bytes memory data, string memory imgType) internal pure returns (string memory) {
-    return SVGWrap(toBase64(data), imgType, false);
+  function HTMLWrap(bytes memory data, string memory imgType) internal pure returns (string memory) {
+    return HTMLWrap(toBase64(data), imgType, false);
   }
 
   /// @notice Encodes a raw bytes array into a Base64 string.
