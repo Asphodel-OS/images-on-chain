@@ -23,7 +23,7 @@ library LibFormat {
       '"/></div>'
     );
 
-    return LibString.concat("data:text/html;base64,", Base64.encode(svg));
+    return LibString.concat("data:application/xml;base64,", Base64.encode(svg));
   }
 
   function HTMLWrap(bytes memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
