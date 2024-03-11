@@ -10,8 +10,8 @@ library LibFormat {
   /// @dev NFT Marketplaces can only read base64 SVGs, therefore a workaround
   function SVGWrap(string memory data, string memory imgType, bool optimisePixel) internal pure returns (string memory) {
     bytes memory svg = abi.encodePacked(
-      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image ',
-      optimisePixel ? 'height="100%" image-rendering="pixelated" ' : "",
+      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="100%" width="100%"><image ',
+      optimisePixel ? 'height="100%" width="100%" image-rendering="pixelated" ' : "",
       'xlink:href="data:image/',
       imgType,
       ";base64,",
